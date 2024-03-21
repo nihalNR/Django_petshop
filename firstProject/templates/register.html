@@ -1,0 +1,27 @@
+{% extends "base.html" %}  
+
+{% block content %}
+ 
+<form action=""  method="post">
+
+{% csrf_token %}
+
+ {% comment "" %}{{ form.as_p}}{% endcomment %}
+
+ <table>
+
+{% for i in form %}
+  <tr>
+
+     <td>{{i.label}}</td>
+     <td>{{i}}</td>
+
+  </tr>
+{% endfor %}
+
+ </table>
+    <input type="submit" value="Register">
+
+</form>
+{% endblock  %}
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    {% include 'links.html' %}
+
+</head>
+<body>
+
+    {%  include  'nav.html' %}
+
+    <h1>
+        
+        <h1>{{request.session.currentUser}}</h1>
+        
+                {% for product in object_list %}
+
+
+    <ul>
+<li><a href="{% url 'productdetail' product.id %}"></a>Name:{{product.product_name}}</li>
+<li>Description::{{product.product_description}}</li>
+
+<div><img src="{{product.product_picture.url}}" alt="" height="100px"></div>
+
+    </ul>
+
+    {% endfor %}
+</body>
+</html>

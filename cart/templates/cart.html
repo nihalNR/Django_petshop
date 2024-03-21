@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load CustomFilter %}
+
+{% block content %}
+
+            <h3>Add Cart</h3>
+
+            {% for item in items %}
+
+                    {% include "cartProduct.html" with p=item.produts%}
+                    <h1>Quantity::{{item.quantity}}</h1>
+
+                    <form action="{% url 'updateCart' cartItemId=item.id%}">
+
+                        <button type="button" onclick="updateQuantity('{{item.id}}',-1)">-</button>
+                        <input type="number" name="quantity" id="quantity-{{item.id}}" value="{{item.quantity}}" min="0">
+                        <button type="button" onclick="updateQuantity('{{item.id}}',1)">+</button>
+              
+              
+                        <button type="submit" class="btn btn-danger" > 
+                            Update
+                        </button>
+              
+                    </form>
+
+                      <button><a href="{% url 'deleteCartItem' cartItemId=item.id %}">Delete</a></button>
+              
+                      <script>
+              
+                        function updateQuantity(productId,operation)
+                        {
+              
+                          var quantityInput=document.getElementById("quantity-"+productId);
+                          var currentQuantity=parseInt(quantityInput.value);
+              
+                          var newQuantity=currentQuantity+operation;
+                          quantityInput.value=newQuantity;
+              
+                        }
+              
+                      </script>
+                    
+
+             {% endfor %}
+
+
+
+              <table border="2" cellpadding="40" >
+              <tr>
+              
+                        <th>Product id</th>
+                        <th>Product name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+              
+              
+               </tr>
+              
+               {% for item in items %}
+               <tr>
+              
+                         <th>{{item.produts.id}}</th>
+                         <th>{{item.produts.product_name}}</th>
+                         <th>{{item.quantity}}</th>
+                         <th>{{item.produts.product_price}}</th>
+                         <th>{{item.produts.product_price|multiply:item.quantity}}</th>
+              
+              
+               </tr>
+              
+              
+              
+              
+              
+              {%endfor%}
+              
+              
+              
+              <tr>
+              
+                <th colspan="5"><h1>FinalAmout to pay:{{finalAmount}} 
+                      <button type="button" class="btn btn-success">
+                      <a href=" {% url "checkout" %}" class="btn btn-success">Checkout</a> 
+                      </button>
+                </h1>
+                </th>
+                      
+                </tr>
+              
+              
+                </table>
+              
+                      
+              
+ {% endblock  %}
